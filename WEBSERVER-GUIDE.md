@@ -84,8 +84,10 @@ CONTAINER_NAME="webserver"
 IMAGE_NAME="nginx:alpine"
 
 # Port-Mapping (Host:Container)
-# Format: HOST_PORT:CONTAINER_PORT
-PORT_MAPPING="8080:80"
+# Format: [HOST_IP:]HOST_PORT:CONTAINER_PORT
+# Mit lokaler IP für lokalen Zugriff: 127.0.0.1:8080:80
+# Ohne IP (nicht empfohlen): 8080:80
+PORT_MAPPING="127.0.0.1:8080:80"
 
 # Volume-Mount (optional)
 # Format: /host/path:/container/path
@@ -105,7 +107,7 @@ AUTO_UPDATE="false"
 
 ```bash
 IMAGE_NAME="nginx:alpine"
-PORT_MAPPING="8080:80"
+PORT_MAPPING="127.0.0.1:8080:80"
 VOLUME_MOUNT="/Users/username/html:/usr/share/nginx/html"
 ```
 
@@ -115,7 +117,7 @@ Zugriff: http://localhost:8080
 
 ```bash
 IMAGE_NAME="httpd:alpine"
-PORT_MAPPING="8080:80"
+PORT_MAPPING="127.0.0.1:8080:80"
 VOLUME_MOUNT="/Users/username/html:/usr/local/apache2/htdocs"
 ```
 
@@ -123,14 +125,14 @@ VOLUME_MOUNT="/Users/username/html:/usr/local/apache2/htdocs"
 
 ```bash
 IMAGE_NAME="python:3-alpine"
-PORT_MAPPING="8000:8000"
+PORT_MAPPING="127.0.0.1:8000:8000"
 VOLUME_MOUNT="/Users/username/app:/app"
 ```
 
 Container-Befehl anpassen für Python:
 ```bash
 container run -d --name webserver \
-  -p 8000:8000 \
+  -p 127.0.0.1:8000:8000 \
   -v /Users/username/app:/app \
   python:3-alpine \
   python -m http.server 8000 --directory /app
@@ -204,7 +206,7 @@ cp webserver-manager.sh api-server-manager.sh
 # Setze Environment-Variablen
 export CONTAINER_NAME="api-server"
 export IMAGE_NAME="node:alpine"
-export PORT_MAPPING="3000:3000"
+export PORT_MAPPING="127.0.0.1:3000:3000"
 
 ./api-server-manager.sh start
 ```
@@ -241,7 +243,7 @@ services:
 Entsprechende Konfiguration:
 ```bash
 IMAGE_NAME="nginx:alpine"
-PORT_MAPPING="8080:80"
+PORT_MAPPING="127.0.0.1:8080:80"
 VOLUME_MOUNT="$(pwd)/html:/usr/share/nginx/html"
 MEMORY="2g"
 CPUS="2"
