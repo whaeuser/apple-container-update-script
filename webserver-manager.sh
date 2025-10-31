@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 # Konfiguration (kann über config-Datei überschrieben werden)
 CONTAINER_NAME="${CONTAINER_NAME:-webserver}"
 IMAGE_NAME="${IMAGE_NAME:-nginx:alpine}"
-PORT_MAPPING="${PORT_MAPPING:-8080:80}"
+PORT_MAPPING="${PORT_MAPPING:-127.0.0.1:8080:80}"
 VOLUME_MOUNT="${VOLUME_MOUNT:-}"
 MEMORY="${MEMORY:-2g}"
 CPUS="${CPUS:-2}"
@@ -169,8 +169,19 @@ show_info() {
         echo -e "${GREEN}Webserver erreichbar unter:${NC}"
         echo "  - Container IP: http://$ip"
 
-        # Parse Port-Mapping
-        local host_port=$(echo "$PORT_MAPPING" | cut -d: -f1)
+        # Parse Port-Mapping - unterstützt beide Formate:
+        # Format 1: 127.0.0.1:8080:80 (IP:HOST_PORT:CONTAINER_PORT)
+        # Format 2: 8080:80 (HOST_PORT:CONTAINER_PORT)
+        local host_port=""
+        local field_count=$(echo "$PORT_MAPPING" | grep -o ':' | wc -l)
+        if [ "$field_count" -eq 2 ]; then
+            # Format mit IP: nimm Feld 2
+            host_port=$(echo "$PORT_MAPPING" | cut -d: -f2)
+        else
+            # Format ohne IP: nimm Feld 1
+            host_port=$(echo "$PORT_MAPPING" | cut -d: -f1)
+        fi
+
         if [[ "$host_port" =~ ^[0-9]+$ ]]; then
             echo "  - Localhost: http://localhost:$host_port"
         fi
@@ -287,8 +298,10 @@ CONTAINER_NAME="webserver"
 # Docker Image (Beispiele: nginx:alpine, httpd:alpine, python:3-alpine)
 IMAGE_NAME="nginx:alpine"
 
-# Port-Mapping (Host:Container)
-PORT_MAPPING="8080:80"
+# Port-Mapping (Format: [HOST_IP:]HOST_PORT:CONTAINER_PORT)
+# Mit lokaler IP für lokalen Zugriff: 127.0.0.1:8080:80
+# Ohne IP (nicht empfohlen): 8080:80
+PORT_MAPPING="127.0.0.1:8080:80"
 
 # Volume-Mount (optional, z.B. /host/path:/container/path)
 VOLUME_MOUNT=""
