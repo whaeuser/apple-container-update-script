@@ -84,7 +84,7 @@ check_for_updates() {
 
 # Container-Status prüfen
 get_container_status() {
-    container list | grep -w "$CONTAINER_NAME" | awk '{print $5}' || echo "not_found"
+    container list --all | grep -w "$CONTAINER_NAME" | awk '{print $5}' || echo "not_found"
 }
 
 # Container starten
