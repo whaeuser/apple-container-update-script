@@ -1,6 +1,8 @@
-# Apple Container Update Script
+# Apple Container Management Scripts
 
-Sicheres Update-Script für [Apple Container](https://github.com/apple/container) mit erweiterten Sicherheitsprüfungen und automatisiertem Installations-Prozess.
+Umfassende Management-Tools für [Apple Container](https://github.com/apple/container):
+- **Update-Script**: Sicheres Update mit erweiterten Sicherheitsprüfungen
+- **Webserver-Manager**: Automatisiertes Container-Management mit Auto-Start
 
 ## 🔒 Sicherheits-Features
 
@@ -22,7 +24,7 @@ Sicheres Update-Script für [Apple Container](https://github.com/apple/container
 
 ## 🚀 Installation & Verwendung
 
-### Schnellstart
+### Update-Script
 
 ```bash
 # Script ausführbar machen
@@ -32,20 +34,45 @@ chmod +x update-container.sh
 ./update-container.sh
 ```
 
-### Was das Script tut
+**Was das Update-Script tut:**
+1. Stoppt das laufende Container System
+2. Deinstalliert die alte Version (behält Benutzerdaten)
+3. Lädt die neueste Version von GitHub herunter
+4. Verifiziert Checksummen und Signatur
+5. Installiert das neue Package
+6. Startet das Container System neu
 
-1. **Stoppt** das laufende Container System
-2. **Deinstalliert** die alte Version (behält Benutzerdaten)
-3. **Lädt** die neueste Version von GitHub herunter
-4. **Verifiziert** Checksummen und Signatur
-5. **Installiert** das neue Package
-6. **Startet** das Container System neu
+### Webserver-Manager
+
+```bash
+# Konfiguration erstellen
+./webserver-manager.sh config
+
+# Webserver starten
+./webserver-manager.sh start
+
+# Auto-Start beim System-Boot aktivieren
+./webserver-manager.sh autostart
+```
+
+**Features:**
+- ✅ Automatisches Container-Management (start/stop/restart)
+- ✅ Auto-Start beim System-Boot via LaunchAgent
+- ✅ Optional: Auto-Update beim Start
+- ✅ Konfigurierbare Webserver (nginx, Apache, Python, etc.)
+- ✅ Volume-Mounting für statische Inhalte
+- ✅ Logs und Monitoring
+- ✅ Ressourcen-Limits (CPU, Memory)
+
+📖 **Vollständige Anleitung**: [WEBSERVER-GUIDE.md](WEBSERVER-GUIDE.md)
 
 ## 📁 Projekt-Struktur
 
 ```
 .
-├── update-container.sh          # Haupt-Update-Script (7.7 KB)
+├── update-container.sh          # Container-System Update-Script
+├── webserver-manager.sh         # Webserver Container Manager
+├── WEBSERVER-GUIDE.md           # Webserver-Manager Anleitung
 ├── CLAUDE.md                    # Projekt-Dokumentation
 ├── README.md                    # Diese Datei
 └── .gitignore                   # Git-Ignore-Regeln
@@ -53,7 +80,7 @@ chmod +x update-container.sh
 
 ## 🔧 Funktionsweise
 
-### Sicherheits-Pipeline
+### Update-Script: Sicherheits-Pipeline
 
 ```mermaid
 graph TD
