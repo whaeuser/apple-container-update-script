@@ -41,32 +41,11 @@ chmod +x update-container.sh
 5. **Installiert** das neue Package
 6. **Startet** das Container System neu
 
-## 🧪 Testen
-
-Das Projekt enthält eine umfassende Test-Suite:
-
-```bash
-# Alle nicht-destruktiven Tests ausführen
-./test-update-script.sh
-
-# Cleanup-Mechanismus testen
-./test-cleanup.sh
-
-# Checksummen-Validierung testen
-./test-checksum.sh
-```
-
-Siehe [TEST-REPORT.md](TEST-REPORT.md) für detaillierte Test-Ergebnisse.
-
 ## 📁 Projekt-Struktur
 
 ```
 .
 ├── update-container.sh          # Haupt-Update-Script (7.7 KB)
-├── test-update-script.sh        # Vollständiger Funktionstest (5.2 KB)
-├── test-cleanup.sh              # Cleanup-Test (790 B)
-├── test-checksum.sh             # Checksummen-Test (1.9 KB)
-├── TEST-REPORT.md               # Detaillierter Test-Bericht
 ├── CLAUDE.md                    # Projekt-Dokumentation
 ├── README.md                    # Diese Datei
 └── .gitignore                   # Git-Ignore-Regeln
@@ -155,8 +134,6 @@ Das Script fordert bei fehlender oder ungültiger Signatur eine Bestätigung an.
 ✅ Live-Test erfolgreich (Version 0.6.0 installiert)
 ```
 
-Siehe [TEST-REPORT.md](TEST-REPORT.md) für vollständigen Bericht.
-
 ## 🔗 Links
 
 - **Apple Container**: https://github.com/apple/container
@@ -183,7 +160,6 @@ Verbesserungsvorschläge und Pull Requests sind willkommen!
 
 - Initial Release
 - Vollständige Sicherheits-Features implementiert
-- Umfassende Test-Suite
 - Live-Test erfolgreich auf macOS 26
 
 ---
